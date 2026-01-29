@@ -26,4 +26,6 @@ This project is a joint effort by three collaborators, each contributing their p
 ## Getting Started
 1. Clone the repository:
    ```bash
-   git clone https://github.com/<your-org-or-user>/<repo-name>.git
+   git clone https://github.com/<your-org-or-user>/<repo-name>.git 
+
+## Finish
