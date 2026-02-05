@@ -5,4 +5,4 @@ module Not (
   
   nand n1(out, in, in);
   
-  endmodule
+endmodule
