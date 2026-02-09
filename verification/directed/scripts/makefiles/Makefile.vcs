@@ -32,7 +32,7 @@ MERGE_DIR   := $(ROOT_DIR)/merge_cov
 
 # TB configurations
 TEST ?= top_test
-SEED ?= 1503625532
+SEED ?= 15036255
 VCS_DEFINES ?= +define+GIT_DIR=\"$(TB_DIR)\"
 RUN_ARGS ?= 
 
@@ -76,7 +76,10 @@ endif
 # ==============================  TOOLS SETUP  ================================
 
 # Files
-RTL_FILES = $(RTL_DIR)/Not.sv
+RTL_FILES = $(RTL_DIR)/Memory/dff.sv \
+			$(RTL_DIR)/Memory/mux2_1.sv \
+			$(RTL_DIR)/Memory/dff_load.sv 
+
 SVE = -F $(TB_DIR)/sve.f
 VERDI_FILE = $(VERDI_DIR)/verdi.tcl
 DPI_FILE = 
@@ -159,6 +162,7 @@ vars: ## TB: Print Makefile variables
 	@echo "VERDI_DIR   = $(VERDI_DIR)"
 	@echo "RTL_DIR     = $(RTL_DIR)"
 	@echo "DPI_DIR     = $(DPI_DIR)"
+	@echo "RTL_FILES   = $(RTL_FILES)"
 	@echo ""
 	@echo -e "$(C_ORA)UVM variables$(NC)"
 	@echo "TEST             = $(TEST)"
