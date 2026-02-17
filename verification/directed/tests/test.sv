@@ -34,6 +34,11 @@ fork
       send_data_load();
     end
 
+    begin
+    // adress send_data_address
+      send_data_address();
+    end
+
     begin 
     // Monitor
     monitor_output();
@@ -50,9 +55,11 @@ join_any
   // ======================= TASKS ======================== //
 
   task automatic reset();
-    vif.rst_i = 1'b1;
-    vif.d_i = 1'b0;
-    vif.load_i = 1'b0;
+    vif.rst_i = 'd1;
+    vif.in_i = 'd0;
+    vif.load_i = 'd0;
+    vif.address_i = 'd0;
+
    // vif.a_i = 8'b0;
    // vif.b_i = 8'b0;
    // vif.sel_i = 1'b0;
@@ -91,33 +98,37 @@ join_any
 //    end
 //    endtask: send_data_port_sel_random 
 
-  task automatic send_data_dff();
- 
-  for (int i = 0; i < 5; i++) begin 
-     @(vif.cb);
-    vif.cb.d_i <= $urandom_range(0,255);
-    end
-
+task automatic send_data_dff();
+    @(vif.cb); vif.cb.in_i <= 'd7;   // Ciclo 1: Escribimos 7
+    @(vif.cb); vif.cb.in_i <= 'd2;   // Ciclo 2: Escribimos 2
+    @(vif.cb); vif.cb.in_i <= 'd3;   // Ciclo 3: E
+    @(vif.cb); vif.cb.in_i <= 'd99;  // Ciclo 4: 
   endtask: send_data_dff 
 
   task automatic send_data_load();
-
-  for (int i = 0; i < 5; i++) begin 
-     @(vif.cb);
-    vif.cb.load_i <= $urandom_range(0,1);
-    end
+    @(vif.cb); vif.cb.load_i <= 'd1; // Ciclo 1: On Moso escritura
+    @(vif.cb); vif.cb.load_i <= 'd1; // Ciclo 2: On
+    @(vif.cb); vif.cb.load_i <= 'd0; // Ciclo 3: Off
+    @(vif.cb); vif.cb.load_i <= 'd0; // Ciclo 4: Off (Modo lectura )
   endtask : send_data_load
 
+  task automatic send_data_address();
+    @(vif.cb); vif.cb.address_i <= 'd3; // Ciclo 1: Escribe en Dir 3
+    @(vif.cb); vif.cb.address_i <= 'd3; // Ciclo 2: Escribe en Dir 3
+    @(vif.cb); vif.cb.address_i <= 'd1; // Ciclo 3: 
+    @(vif.cb); vif.cb.address_i <= 'd2; // Ciclo 4: 
+  endtask : send_data_address
 
 task automatic monitor_output();
 forever begin 
   @(posedge vif.clk_i );
-  $display("[INFO:Gate FFD]: %8t: Reset = %1b, Load = %1b,  Input D = %d,  value = %d", 
-            $realtime, vif.rst_i , vif.load_i,vif.d_i, vif.q_o);
+  $display("[INFO:Gate FFD]: %8t: Reset = %1b, Load = %1b, Direccion = %d , Input D = %d,  Output = %d", 
+            $realtime, vif.rst_i , vif.load_i,vif.address_i, vif.in_i, vif.out_o);
 
 end
 
-
+// 1 Escribe
+// 0 Lee
 
 endtask: monitor_output
 
