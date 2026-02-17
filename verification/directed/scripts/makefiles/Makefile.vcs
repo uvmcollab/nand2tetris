@@ -32,7 +32,7 @@ MERGE_DIR   := $(ROOT_DIR)/merge_cov
 
 # TB configurations
 TEST ?= top_test
-SEED ?= 15036255
+SEED ?= 150362551
 VCS_DEFINES ?= +define+GIT_DIR=\"$(TB_DIR)\"
 RUN_ARGS ?= 
 
@@ -76,12 +76,13 @@ endif
 # ==============================  TOOLS SETUP  ================================
 
 # Files
-RTL_FILES = $(RTL_DIR)/Memory/dff.sv \
-			$(RTL_DIR)/Memory/mux2_1.sv \
-			$(RTL_DIR)/Memory/register_16.sv \
-			$(RTL_DIR)/Memory/mux3_8.sv \
-			$(RTL_DIR)/Memory/D_mux8.sv \
-			$(RTL_DIR)/Memory/RAM.sv 
+RTL_FILES = $(RTL_DIR)/boolean_arith/full_adder.sv \
+			$(RTL_DIR)/boolean_arith/adder16.sv \
+		#	$(RTL_DIR)/Memory/mux2_1.sv \
+		#	$(RTL_DIR)/Memory/register_16.sv \
+		#	$(RTL_DIR)/Memory/mux3_8.sv \
+		#	$(RTL_DIR)/Memory/D_mux8.sv \
+		#	$(RTL_DIR)/Memory/RAM.sv 
 
 SVE = -F $(TB_DIR)/sve.f
 VERDI_FILE = $(VERDI_DIR)/verdi.tcl

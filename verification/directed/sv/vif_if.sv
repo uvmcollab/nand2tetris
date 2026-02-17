@@ -10,12 +10,23 @@ interface vif_if(
   parameter WIDTH = 16;
 //  import config_pkg::*;
 
+// For adder
+
+logic rst_i;
+logic [WIDTH-1:0] a_i;
+logic [WIDTH-1:0] b_i;
+logic carry_i;
+logic [WIDTH-1:0] sum_o;
+logic carry_o;
+
+
 // For D Flip-flop
+/*
 logic rst_i;
 logic [WIDTH-1:0]in_i;
 logic load_i;
 logic [2:0]address_i;
-logic [WIDTH-1:0]out_o;
+logic [WIDTH-1:0]out_o;*/
 
 //For mux2_1 
 /*
@@ -41,10 +52,11 @@ logic [WIDTH-1:0] y_o;*/
     output b_i;
     input y_o;*/
     output rst_i;
-    output in_i;
-    output load_i;
-    output address_i;
-    input out_o;
+    output a_i;
+    output b_i;
+    output carry_i;
+    input sum_o;
+    input carry_o;
   endclocking
 
 
