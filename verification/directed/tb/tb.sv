@@ -9,7 +9,7 @@ module tb;
   logic clk_i = 0;
   int unsigned MainClkPeriod = 10;  // 100 MHz -> 10 ns period
   always #(MainClkPeriod / 2) clk_i = ~clk_i; 
-  
+  parameter int WIDTH = 16;
     // Interface
   vif_if vif (clk_i);
 //  vif_if vif();
@@ -19,15 +19,16 @@ module tb;
   
   // Instantiation
   
-  dff_load #(
-    .WIDTH(8)
+  ram #(
+    .WIDTH(WIDTH)
     )
   dut (
       .clk_i(clk_i), 
       .rst_i(vif.rst_i), 
+      .in_i(vif.in_i),
       .load_i(vif.load_i),
-      .d_i(vif.d_i),
-      .q_o(vif.q_o)
+      .address_i(vif.address_i),
+      .out_o(vif.out_o)
     );
 
 

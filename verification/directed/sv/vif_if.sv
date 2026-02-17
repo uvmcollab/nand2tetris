@@ -7,14 +7,15 @@ interface vif_if(
 
   timeunit      1ns;
   timeprecision 100ps;
-  parameter WIDTH = 8;
+  parameter WIDTH = 16;
 //  import config_pkg::*;
 
 // For D Flip-flop
 logic rst_i;
+logic [WIDTH-1:0]in_i;
 logic load_i;
-logic [WIDTH-1:0]d_i;
-logic [WIDTH-1:0]q_o;
+logic [2:0]address_i;
+logic [WIDTH-1:0]out_o;
 
 //For mux2_1 
 /*
@@ -40,9 +41,10 @@ logic [WIDTH-1:0] y_o;*/
     output b_i;
     input y_o;*/
     output rst_i;
-    output d_i;
+    output in_i;
     output load_i;
-    input q_o;
+    output address_i;
+    input out_o;
   endclocking
 
 
