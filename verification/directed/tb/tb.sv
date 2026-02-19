@@ -19,17 +19,19 @@ module tb;
   
   // Instantiation
   
-  adder16 #(
+  inc16 #(
     .WIDTH(WIDTH)
     )
   dut (
       .clk_i(clk_i), 
       .rst_i(vif.rst_i), 
-      .a_i(vif.a_i),
+      .in_i(vif.in_i),
+      .out_o(vif.out_o)
+      /*.a_i(vif.a_i),
       .b_i(vif.b_i),
       .carry_i(vif.carry_i),
       .sum_o(vif.sum_o),
-      .carry_o(vif.carry_o)
+      .carry_o(vif.carry_o)*/
     );
 
 

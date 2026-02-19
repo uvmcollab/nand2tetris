@@ -22,10 +22,13 @@ fork
     // Stimulus
     begin
    // send_data_port_a();
-   // test for mux
-    send_data_port_a_random();
-    send_data_port_b_random();
-    send_data_port_carry_random();
+    // test for incrementer
+    send_data_port_in();
+
+   // test for mux and adder
+  //  send_data_port_a_random();
+  //  send_data_port_b_random();
+  //  send_data_port_carry_random();
    // send_data_port_sel_random();*/
   //  send_data_dff();
     end
@@ -47,7 +50,7 @@ fork
 
 join_any
     // Drain time
-    #(50ns);
+    #(500ns);
     $display("End Of Simulation at %0t.", $realtime);
     $finish;
   end
@@ -57,13 +60,17 @@ join_any
 
   task automatic reset();
     vif.rst_i = 'd1;
+    //for incre
+    vif.in_i = 'd0;
+    //for ram 
     //vif.in_i = 'd0;
     //vif.load_i = 'd0;
     //vif.address_i = 'd0;
-
-    vif.a_i = 8'b0;
-    vif.b_i = 8'b0;
-    vif.carry_i = 1'b0;
+  //for adder 
+    //vif.a_i = 8'b0;
+    //vif.b_i = 8'b0;
+    //vif.carry_i = 1'b0;
+    //for mux2_1
    // vif.sel_i = 1'b0;
     repeat (5) @(vif.cb);
     vif.cb.rst_i <= 1'b0;
@@ -79,26 +86,26 @@ join_any
 
   // endtask : send_data_port_a
 
-   task automatic send_data_port_a_random();
-  for (int i = 0; i < 5; i++) begin 
-    vif.cb.a_i <= 'd52215;
-     @(vif.cb);
-  end
-    endtask: send_data_port_a_random
+//    task automatic send_data_port_a_random();
+//   for (int i = 0; i < 5; i++) begin 
+//     vif.cb.a_i <= 'd52215;
+//      @(vif.cb);
+//   end
+//     endtask: send_data_port_a_random
 
-   task automatic send_data_port_b_random();
-  for (int i = 0; i < 5; i++) begin 
-    vif.cb.b_i <= 'd39218;
-    @(vif.cb);
-  end
-    endtask: send_data_port_b_random
+//    task automatic send_data_port_b_random();
+//   for (int i = 0; i < 5; i++) begin 
+//     vif.cb.b_i <= 'd39218;
+//     @(vif.cb);
+//   end
+//     endtask: send_data_port_b_random
 
-task automatic send_data_port_carry_random();
-    @(vif.cb);
-    vif.cb.carry_i <= $urandom_range(0,1);
+// task automatic send_data_port_carry_random();
+//     @(vif.cb);
+//     vif.cb.carry_i <= $urandom_range(0,1);
 
 
-    endtask: send_data_port_carry_random
+//     endtask: send_data_port_carry_random
 
 
 //   task automatic send_data_port_sel_random();
@@ -129,11 +136,22 @@ task automatic send_data_port_carry_random();
 //    @(vif.cb); vif.cb.address_i <= 'd2; // Ciclo 4: 
 //  endtask : send_data_address
 //
+
+
+// task for incrementer
+
+task automatic send_data_port_in();
+@(vif.cb);
+vif.cb.in_i <= 'd0;   // Ciclo 1: Escribimos 7
+
+endtask: send_data_port_in
+
 task automatic monitor_output();
 forever begin 
   @(posedge vif.clk_i);
-  $display("[INFO:Gate ADDER]: %8t: Reset = %1b, A = %d, B = %d, Carry entrada = %1b, suma = %d, carry salida = %1b", 
-            $realtime, vif.rst_i , vif.a_i, vif.b_i, vif.carry_i, vif.sum_o, vif.carry_o);
+  $display("[INFO:Gate INC16]: %8t: Reset = %1b, In = %d, Out = %d", 
+            $realtime, vif.rst_i , vif.in_i, vif.out_o);
+            vif.in_i = vif.out_o; // Para que el siguiente ciclo incremente el resultado anterior
 
 end
 

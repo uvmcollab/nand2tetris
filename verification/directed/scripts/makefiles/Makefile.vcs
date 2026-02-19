@@ -78,6 +78,7 @@ endif
 # Files
 RTL_FILES = $(RTL_DIR)/boolean_arith/full_adder.sv \
 			$(RTL_DIR)/boolean_arith/adder16.sv \
+			$(RTL_DIR)/boolean_arith/inc16.sv \
 		#	$(RTL_DIR)/Memory/mux2_1.sv \
 		#	$(RTL_DIR)/Memory/register_16.sv \
 		#	$(RTL_DIR)/Memory/mux3_8.sv \
