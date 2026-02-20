@@ -11,11 +11,29 @@ interface vif_if(
 //  import config_pkg::*;
 
 
+//FOR alu
+
+    logic rst_i;
+    logic [WIDTH-1:0] x_i;
+    logic [WIDTH-1:0] y_i;
+    logic zx_i;
+    logic nx_i;
+    logic zy_i;
+    logic ny_i;
+    logic f_i;
+    logic no_i;
+     logic [WIDTH-1:0] out_o;
+     logic zr_o;
+     logic ng_o;
+
+
+
 // FOr incrementer
+/*
   logic rst_i;
   logic [WIDTH-1:0]in_i;
   logic [WIDTH-1:0]out_o;
-
+*/
 
 // For adder
 
@@ -55,8 +73,17 @@ logic [WIDTH-1:0] y_o;*/
     default input #1ns output #1ns;
 
     output rst_i;
-    output in_i;
-    input out_o;
+    output x_i;
+    output y_i;
+    output zx_i;
+    output nx_i;
+    output zy_i;
+    output ny_i;
+    output f_i;
+    output no_i;
+     input out_o;
+     input zr_o;
+     input ng_o;
   /*  output rst_i;
     output sel_i;
     output a_i;

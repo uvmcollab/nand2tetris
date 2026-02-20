@@ -19,14 +19,23 @@ module tb;
   
   // Instantiation
   
-  inc16 #(
+  alu #(
     .WIDTH(WIDTH)
     )
   dut (
       .clk_i(clk_i), 
       .rst_i(vif.rst_i), 
-      .in_i(vif.in_i),
-      .out_o(vif.out_o)
+      .x_i(vif.x_i), 
+      .y_i(vif.y_i),
+      .zx_i(vif.zx_i),
+      .nx_i(vif.nx_i),  
+      .zy_i(vif.zy_i),
+      .ny_i(vif.ny_i),
+      .f_i(vif.f_i),
+      .no_i(vif.no_i),
+      .out_o(vif.out_o),
+      .zr_o(vif.zr_o),
+      .ng_o(vif.ng_o)
       /*.a_i(vif.a_i),
       .b_i(vif.b_i),
       .carry_i(vif.carry_i),
