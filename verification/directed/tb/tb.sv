@@ -19,10 +19,18 @@ module tb;
   
   // Instantiation
   
-  alu #(
+  RAM64 #(
     .WIDTH(WIDTH)
     )
   dut (
+    // For RAM64
+      .clk_i(clk_i), 
+      .rst_i(vif.rst_i), 
+      .in_i(vif.in_i), 
+      .load_i(vif.load_i), 
+      .address_i(vif.address_i), 
+      .out_o(vif.out_o)
+    /* for alu
       .clk_i(clk_i), 
       .rst_i(vif.rst_i), 
       .x_i(vif.x_i), 
@@ -35,7 +43,8 @@ module tb;
       .no_i(vif.no_i),
       .out_o(vif.out_o),
       .zr_o(vif.zr_o),
-      .ng_o(vif.ng_o)
+      .ng_o(vif.ng_o)}*/
+
       /*.a_i(vif.a_i),
       .b_i(vif.b_i),
       .carry_i(vif.carry_i),

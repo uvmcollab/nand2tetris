@@ -10,21 +10,28 @@ interface vif_if(
   parameter WIDTH = 16;
 //  import config_pkg::*;
 
+// FOR RAM64
+    logic rst_i;
+    logic [WIDTH-1:0] in_i;
+    logic load_i;
+    logic [5:0] address_i;
+    logic [WIDTH-1:0] out_o;
+
 
 //FOR alu
 
-    logic rst_i;
-    logic [WIDTH-1:0] x_i;
-    logic [WIDTH-1:0] y_i;
-    logic zx_i;
-    logic nx_i;
-    logic zy_i;
-    logic ny_i;
-    logic f_i;
-    logic no_i;
-     logic [WIDTH-1:0] out_o;
-     logic zr_o;
-     logic ng_o;
+    // logic rst_i;
+    // logic [WIDTH-1:0] x_i;
+    // logic [WIDTH-1:0] y_i;
+    // logic zx_i;
+    // logic nx_i;
+    // logic zy_i;
+    // logic ny_i;
+    // logic f_i;
+    // logic no_i;
+    //  logic [WIDTH-1:0] out_o;
+    //  logic zr_o;
+    //  logic ng_o;
 
 
 
@@ -72,6 +79,14 @@ logic [WIDTH-1:0] y_o;*/
   clocking cb @(posedge clk_i);
     default input #1ns output #1ns;
 
+    // For RAM64
+    output rst_i;
+    output in_i;
+    output load_i;
+    output address_i;
+    input out_o;
+
+/* For alu
     output rst_i;
     output x_i;
     output y_i;
@@ -84,6 +99,7 @@ logic [WIDTH-1:0] y_o;*/
      input out_o;
      input zr_o;
      input ng_o;
+     */
   /*  output rst_i;
     output sel_i;
     output a_i;

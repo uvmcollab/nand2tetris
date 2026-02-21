@@ -24,11 +24,11 @@ fork
    // send_data_port_a();
 
     // for ALu
-    send_data_alu();;
+  //  send_data_alu();;
 
 
     // test for incrementer
-   // send_data_port_in();
+    send_data_port_in();
 
    // test for mux and adder
   //  send_data_port_a_random();
@@ -38,15 +38,15 @@ fork
   //  send_data_dff();
     end
 
-//    begin
+    begin
 //    // Load send_data_dff
-//      send_data_load();
-//    end
+      send_data_load();
+    end
 //
-//    begin
+    begin
 //    // adress send_data_address
-//      send_data_address();
-//    end
+     send_data_address();
+    end
 
     begin 
     // Monitor
@@ -65,7 +65,10 @@ join_any
 
   task automatic reset();
     vif.rst_i = 'd1;
-    // for alu
+    vif.in_i = 'd0;
+    vif.load_i = 'd0;
+    vif.address_i = 'd0;
+    /*// for alu
     vif.x_i = 'd0;
     vif.y_i = 'd0;
     vif.zx_i = 1'b0;
@@ -74,6 +77,7 @@ join_any
     vif.ny_i = 1'b0;
     vif.f_i = 1'b0;
     vif.no_i = 1'b0;
+    */
     //for incre
     //vif.in_i = 'd0;
     //for ram 
@@ -136,52 +140,61 @@ join_any
 //    @(vif.cb); vif.cb.in_i <= 'd99;  // Ciclo 4: 
 //  endtask: send_data_dff 
 //
-//  task automatic send_data_load();
-//    @(vif.cb); vif.cb.load_i <= 'd1; // Ciclo 1: On Moso escritura
-//    @(vif.cb); vif.cb.load_i <= 'd1; // Ciclo 2: On
-//    @(vif.cb); vif.cb.load_i <= 'd0; // Ciclo 3: Off
-//    @(vif.cb); vif.cb.load_i <= 'd0; // Ciclo 4: Off (Modo lectura )
-//  endtask : send_data_load
-//
-//  task automatic send_data_address();
-//    @(vif.cb); vif.cb.address_i <= 'd3; // Ciclo 1: Escribe en Dir 3
-//    @(vif.cb); vif.cb.address_i <= 'd3; // Ciclo 2: Escribe en Dir 3
-//    @(vif.cb); vif.cb.address_i <= 'd1; // Ciclo 3: 
-//    @(vif.cb); vif.cb.address_i <= 'd2; // Ciclo 4: 
-//  endtask : send_data_address
-//
+  task automatic send_data_load();
+    @(vif.cb); vif.cb.load_i <= 'd1; // Ciclo 1: On Modo escritura
+    @(vif.cb); vif.cb.load_i <= 'd1; // Ciclo 2: On
+    @(vif.cb); vif.cb.load_i <= 'd0; // Ciclo 3: Off
+    @(vif.cb); vif.cb.load_i <= 'd0; // Ciclo 4: Off (Modo lectura )
+    @(vif.cb); vif.cb.load_i <= 'd1; // Ciclo 5: on (Modo escritura )
+    @(vif.cb); vif.cb.load_i <= 'd0; // Ciclo 6: Off (Modo lectura )
+    @(vif.cb); vif.cb.load_i <= 'd1; // Ciclo 7: on (Modo escritura )
+    @(vif.cb); vif.cb.load_i <= 'd0; // Ciclo 8: Off (Modo lectura )
+
+  endtask : send_data_load
+
+  task automatic send_data_address();
+    @(vif.cb); vif.cb.address_i <= 'd3; // Ciclo 1: Escribe en Dir 3
+    @(vif.cb); vif.cb.address_i <= 'd3; // Ciclo 2: Escribe en Dir 3
+    @(vif.cb); vif.cb.address_i <= 'd3; // Ciclo 3: Leer de Dir 3
+    @(vif.cb); vif.cb.address_i <= 'd2; // Ciclo 4: Leer de Dir 2
+    @(vif.cb); vif.cb.address_i <= 'd2; // Ciclo 5: Escribir en Dir 2
+    @(vif.cb); vif.cb.address_i <= 'd3; // Ciclo 6: Leer de Dir 3
+    @(vif.cb); vif.cb.address_i <= 'd63; // Ciclo 7: Escribir en Dir 64
+    @(vif.cb); vif.cb.address_i <= 'd63; // Ciclo 8: Leer de Dir 64
+  endtask : send_data_address
+
 
 // 1 Escribe
 // 0 Lee
 
-// task for incrementer
-
-// task automatic send_data_port_in();
-// @(vif.cb);
-// vif.cb.in_i <= 'd0;   // Ciclo 1: Escribimos 7
-
-// endtask: send_data_port_in
 
 
-task automatic send_data_alu();
-    @(vif.cb);
-    vif.cb.x_i <= 'd1;
-    vif.cb.y_i <= 'd5;
-    // BAnderas de control para ALU
-    vif.cb.zx_i <= 1'b0; // No zero x elige la entrada x
-    vif.cb.nx_i <= 1'b1; // No negate x no niega la entrada x
-    vif.cb.zy_i <= 1'b0; // No zero y elige la entrada y
-    vif.cb.ny_i <= 1'b0; //  No negate y
-    vif.cb.f_i <= 1'b1;  // Function: Add =1
-    vif.cb.no_i <= 1'b1; // No negate output
+ task automatic send_data_port_in();
  @(vif.cb);
-endtask: send_data_alu
+ vif.cb.in_i <= 16'b1110_1111_1111_1111;   // Ciclo 1: Escribimos 7
+
+ endtask: send_data_port_in
+
+
+// task automatic send_data_alu();
+//     @(vif.cb);
+//     vif.cb.x_i <= 'd1;
+//     vif.cb.y_i <= 'd5;
+//     // BAnderas de control para ALU
+//     vif.cb.zx_i <= 1'b0; // No zero x elige la entrada x
+//     vif.cb.nx_i <= 1'b1; // No negate x no niega la entrada x
+//     vif.cb.zy_i <= 1'b0; // No zero y elige la entrada y
+//     vif.cb.ny_i <= 1'b0; //  No negate y
+//     vif.cb.f_i <= 1'b1;  // Function: Add =1
+//     vif.cb.no_i <= 1'b1; // No negate output
+//  @(vif.cb);
+// endtask: send_data_alu
 
 task automatic monitor_output();
 forever begin 
   @(vif.cb);
-  $display("[INFO:Gate ALU]: %8t: Reset = %1b, X = %b, Y = %b, Zx = %1b, Zy = %1b, Nx = %1b, Ny = %1b, F = %1b, No = %1b, Out = %b , Zr = %1b, Ng = %1b", 
-            $realtime, vif.rst_i , vif.x_i, vif.y_i, vif.zx_i, vif.zy_i, vif.nx_i, vif.ny_i, vif.f_i, vif.no_i, vif.out_o, vif.zr_o, vif.ng_o);
+  $display("[INFO:Gate RAM]: %8t: Reset = %1b, In = %b, Address = %b, Load = %1b, Out = %b", 
+            $realtime, vif.rst_i , vif.in_i, vif.address_i, vif.load_i, vif.out_o);
 
 
 end

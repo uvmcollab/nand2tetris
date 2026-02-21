@@ -76,18 +76,25 @@ endif
 # ==============================  TOOLS SETUP  ================================
 
 # Files
-RTL_FILES = $(RTL_DIR)/boolean_arith/full_adder.sv \
-			$(RTL_DIR)/boolean_arith/adder16.sv \
-			$(RTL_DIR)/boolean_arith/inc16.sv \
-			$(RTL_DIR)/boolean_arith/c_and.sv \
-			$(RTL_DIR)/boolean_arith/Not.sv \
-			$(RTL_DIR)/boolean_arith/mux2_1.sv \
-			$(RTL_DIR)/boolean_arith/alu.sv \
-		#	$(RTL_DIR)/Memory/mux2_1.sv \
-		#	$(RTL_DIR)/Memory/register_16.sv \
-		#	$(RTL_DIR)/Memory/mux3_8.sv \
-		#	$(RTL_DIR)/Memory/D_mux8.sv \
-		#	$(RTL_DIR)/Memory/RAM.sv 
+RTL_FILES = $(RTL_DIR)/Memory/mux2_1.sv \
+			$(RTL_DIR)/Memory/dff.sv \
+			$(RTL_DIR)/Memory/mux3_8.sv \
+			$(RTL_DIR)/Memory/D_mux8.sv \
+			$(RTL_DIR)/Memory/register_16.sv \
+			$(RTL_DIR)/Memory/RAM.sv \
+			$(RTL_DIR)/Memory/RAM64.sv  	
+#$(RTL_DIR)/boolean_arith/full_adder.sv 
+#$(RTL_DIR)/boolean_arith/adder16.sv 
+#$(RTL_DIR)/boolean_arith/inc16.sv 
+#$(RTL_DIR)/boolean_arith/c_and.sv 
+#$(RTL_DIR)/boolean_arith/Not.sv 
+#$(RTL_DIR)/boolean_arith/mux2_1.sv 
+#$(RTL_DIR)/boolean_arith/alu.sv 
+#$(RTL_DIR)/Memory/mux2_1.sv 
+#$(RTL_DIR)/Memory/register_16.sv 
+#$(RTL_DIR)/Memory/mux3_8.sv 
+#$(RTL_DIR)/Memory/D_mux8.sv 
+#$(RTL_DIR)/Memory/RAM.sv 
 
 SVE = -F $(TB_DIR)/sve.f
 VERDI_FILE = $(VERDI_DIR)/verdi.tcl

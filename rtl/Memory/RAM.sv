@@ -1,4 +1,4 @@
-module ram 
+module RAM 
 #(
     parameter int WIDTH=16
 )
@@ -30,8 +30,8 @@ D_mux8 #(
     )
     D_mux8_instance(
         .sel_i(address_i),
-        .value_i(load_i),
-        .a_o(load_r1),
+        .value_i(load_i), // ees de un bit porque solo definie si se carga o no, el registro se carga con el valor de in_i
+        .a_o(load_r1), // con la direccion del selector, se activa la señal de carga del registro correspondiente
         .b_o(load_r2),
         .c_o(load_r3),
         .d_o(load_r4),
@@ -48,7 +48,7 @@ register_16 #(
         .clk_i(clk_i),
         .rst_i(rst_i),
         .load_i(load_r1),
-        .d_i(in_i),
+        .d_i(in_i), // todos los registros reciben el mismo valor de entrada, pero solo el que tenga su señal de carga activa se actualiza con ese valor
         .q_o(q_r1_mux)
 
     );
@@ -149,4 +149,4 @@ mux3_8 #(
     .y_o(out_o)
 );
 
-endmodule: ram 
+endmodule: RAM 
