@@ -14,7 +14,7 @@ interface vif_if(
     logic rst_i;
     logic [WIDTH-1:0] in_i;
     logic load_i;
-    logic [11:0] address_i;
+    logic [13:0] address_i;
     logic [WIDTH-1:0] out_o;
 
 

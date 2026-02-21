@@ -153,6 +153,9 @@ join_any
     @(vif.cb); vif.cb.load_i <= 'd0; // Ciclo 10: Off (Modo lectura )
     @(vif.cb); vif.cb.load_i <= 'd1; // Ciclo 9: on (Modo escritura ) PRUEBA RAM4k
     @(vif.cb); vif.cb.load_i <= 'd0; // Ciclo 10: Off (Modo lectura )
+
+    @(vif.cb); vif.cb.load_i <= 'd1; // Ciclo 9: on (Modo escritura ) PRUEBA RAM16k
+    @(vif.cb); vif.cb.load_i <= 'd0; // Ciclo 10: Off (Modo lectura )
   endtask : send_data_load
 
   task automatic send_data_address();
@@ -168,6 +171,9 @@ join_any
     @(vif.cb); vif.cb.address_i <= 'd511; // Ciclo 10: Leer de Dir 512
     @(vif.cb); vif.cb.address_i <= 'd4095; // Ciclo 9: Escribir en Dir 4095 = 4k-1
     @(vif.cb); vif.cb.address_i <= 'd4095; // Ciclo 10: Leer de Dir 4095 = 4k-1
+
+    @(vif.cb); vif.cb.address_i <= 'd16383; // Ciclo 9: Escribir en Dir 16383 = 16k-1
+    @(vif.cb); vif.cb.address_i <= 'd16383; // Ciclo 10: Leer de Dir 16383 = 16k-1
   endtask : send_data_address
 
 
@@ -191,6 +197,9 @@ join_any
  @(vif.cb);vif.cb.in_i <= 16'b0000_1010_1010_0000;   // Ciclo 10: Escribimos en dir 4095 = 4k-1
  @(vif.cb);vif.cb.in_i <= 16'b0000_1010_1111_1111;   // Ciclo 10: Leemos en dir 4095 = 4k-1
 
+ @(vif.cb);vif.cb.in_i <= 16'b0111_1110_0111_1110;   // Ciclo 10: Escribimos en dir 16383 = 16k-1
+ @(vif.cb);vif.cb.in_i <= 16'b0011_1100_0011_1100;   // Ciclo 10: Leemos en dir 16383 = 16k-1
+
  endtask: send_data_port_in
 
 
@@ -211,7 +220,7 @@ join_any
 task automatic monitor_output();
 forever begin 
   @(vif.cb);
-  $display("[INFO:Gate RAM]: %8t: Reset = %1b, In = %b, Address = %b, Load = %1b, Out = %b", 
+  $display("[INFO:Gate RAM16K]: %8t: Reset = %1b, In = %b, Address = %b, Load = %1b, Out = %b", 
             $realtime, vif.rst_i , vif.in_i, vif.address_i, vif.load_i, vif.out_o);
 
 
