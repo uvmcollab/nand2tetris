@@ -19,7 +19,7 @@ module tb;
   
   // Instantiation
   
-  RAM64 #(
+  RAM512 #(
     .WIDTH(WIDTH)
     )
   dut (

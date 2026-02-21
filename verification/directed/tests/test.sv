@@ -149,7 +149,8 @@ join_any
     @(vif.cb); vif.cb.load_i <= 'd0; // Ciclo 6: Off (Modo lectura )
     @(vif.cb); vif.cb.load_i <= 'd1; // Ciclo 7: on (Modo escritura )
     @(vif.cb); vif.cb.load_i <= 'd0; // Ciclo 8: Off (Modo lectura )
-
+    @(vif.cb); vif.cb.load_i <= 'd1; // Ciclo 9: on (Modo escritura ) PRUEBA RAM512
+    @(vif.cb); vif.cb.load_i <= 'd0; // Ciclo 10: Off (Modo lectura )
   endtask : send_data_load
 
   task automatic send_data_address();
@@ -161,6 +162,8 @@ join_any
     @(vif.cb); vif.cb.address_i <= 'd3; // Ciclo 6: Leer de Dir 3
     @(vif.cb); vif.cb.address_i <= 'd63; // Ciclo 7: Escribir en Dir 64
     @(vif.cb); vif.cb.address_i <= 'd63; // Ciclo 8: Leer de Dir 64
+    @(vif.cb); vif.cb.address_i <= 'd511; // Ciclo 9: Escribir en Dir 512
+    @(vif.cb); vif.cb.address_i <= 'd511; // Ciclo 10: Leer de Dir 512
   endtask : send_data_address
 
 
@@ -170,9 +173,16 @@ join_any
 
 
  task automatic send_data_port_in();
- @(vif.cb);
- vif.cb.in_i <= 16'b1110_1111_1111_1111;   // Ciclo 1: Escribimos 7
-
+ @(vif.cb);vif.cb.in_i <= 16'b1110_1111_1111_1111;   // Ciclo 1: Escribimos 7
+ @(vif.cb);vif.cb.in_i <= 16'b1110_1111_1111_1111;   // Ciclo 2: Escribimos 7
+ @(vif.cb);vif.cb.in_i <= 16'b1110_1111_1111_1111;   // Ciclo 3: Escribimos 7
+ @(vif.cb);vif.cb.in_i <= 16'b1110_1111_1111_1111;   // Ciclo 4: Escribimos 7
+ @(vif.cb);vif.cb.in_i <= 16'b1110_1111_1111_1110;   // Ciclo 5: Escribimos 6
+ @(vif.cb);vif.cb.in_i <= 16'b1110_1111_1111_1110;               // Ciclo 6: Escribimos 0
+ @(vif.cb);vif.cb.in_i <= 16'b1110_1111_1111_1110;               // Ciclo 7: Escribimos 0
+ @(vif.cb);vif.cb.in_i <= 16'b1110_1111_1111_1111;   // Ciclo 8: Escribimos 7
+ @(vif.cb);vif.cb.in_i <= 16'b1110_0000_1111_0000;   // Ciclo 9: Escribimos 7 
+ @(vif.cb);vif.cb.in_i <= 16'b1110_1111_1111_1111;   // Ciclo 10: Escribimos 7 
  endtask: send_data_port_in
 
 
