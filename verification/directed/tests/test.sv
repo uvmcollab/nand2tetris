@@ -26,9 +26,11 @@ fork
     // for ALu
   //  send_data_alu();;
 
+    send_data_in();
 
-    // test for incrementer
-    send_data_port_in();
+
+    // test for RAM
+   // send_data_port_in();
 
    // test for mux and adder
   //  send_data_port_a_random();
@@ -39,14 +41,24 @@ fork
     end
 
     begin
-//    // Load send_data_dff
-      send_data_load();
+          send_data_load();
+
     end
-//
+
     begin
-//    // adress send_data_address
-     send_data_address();
+          send_data_inc();
     end
+
+   // begin
+// //   // Load send_data_dff for RAM
+   //   send_data_load();
+   // end
+////
+   // begin
+// //   // adress send_data_address FOR RAM
+   //    send_data_address();
+   //  send_data_address();
+   // end
 
     begin 
     // Monitor
@@ -64,10 +76,18 @@ join_any
   // ======================= TASKS ======================== //
 
   task automatic reset();
+  // FOR incrementer
+  vif.rst_i = 1'b1;
+  vif.in_i = 16'b0;
+  vif.load_i = 1'b0;
+  vif.inc_i = 1'b0;
+  // FOR RAM
+  /*
     vif.rst_i = 'd1;
     vif.in_i = 'd0;
     vif.load_i = 'd0;
     vif.address_i = 'd0;
+    */
     /*// for alu
     vif.x_i = 'd0;
     vif.y_i = 'd0;
@@ -140,6 +160,10 @@ join_any
 //    @(vif.cb); vif.cb.in_i <= 'd99;  // Ciclo 4: 
 //  endtask: send_data_dff 
 //
+
+////////// FOR RAM
+
+/*
   task automatic send_data_load();
     @(vif.cb); vif.cb.load_i <= 'd1; // Ciclo 1: On Modo escritura
     @(vif.cb); vif.cb.load_i <= 'd1; // Ciclo 2: On
@@ -181,7 +205,6 @@ join_any
 // 0 Lee
 
 
-
  task automatic send_data_port_in();
  @(vif.cb);vif.cb.in_i <= 16'b1110_1111_1111_1111;   // Ciclo 1: Escribimos 7
  @(vif.cb);vif.cb.in_i <= 16'b1110_1111_1111_1111;   // Ciclo 2: Escribimos 7
@@ -201,6 +224,7 @@ join_any
  @(vif.cb);vif.cb.in_i <= 16'b0011_1100_0011_1100;   // Ciclo 10: Leemos en dir 16383 = 16k-1
 
  endtask: send_data_port_in
+*/
 
 
 // task automatic send_data_alu();
@@ -217,11 +241,33 @@ join_any
 //  @(vif.cb);
 // endtask: send_data_alu
 
+task automatic send_data_in();
+    @(vif.cb);
+    vif.cb.in_i <= 16'b0000_0000_0001_0000;   // Ciclo 1: Escribimos
+        @(vif.cb);
+endtask: send_data_in  
+
+task automatic send_data_load();
+    @(vif.cb);
+    vif.cb.load_i <= 1'b0; // Cargamos el valor de in_i en el PC
+     repeat(3) @(vif.cb);
+        vif.cb.load_i <= 1'b1; // Cargamos el valor de in_i en el PC
+          @(vif.cb);
+        vif.cb.load_i <= 1'b0; // Cargamos el valor de in_i en el PC
+
+endtask: send_data_load
+
+task automatic send_data_inc();
+    @(vif.cb);
+    vif.cb.inc_i <= 1'b1; // Incrementamos el valor del PC
+      @(vif.cb);
+endtask: send_data_inc
+
 task automatic monitor_output();
 forever begin 
   @(vif.cb);
-  $display("[INFO:Gate RAM16K]: %8t: Reset = %1b, In = %b, Address = %b, Load = %1b, Out = %b", 
-            $realtime, vif.rst_i , vif.in_i, vif.address_i, vif.load_i, vif.out_o);
+  $display("[INFO:Gate PC]: %8t: Reset = %1b, In = %b, Load = %b, Inc = %1b, Out = %b", 
+            $realtime, vif.rst_i , vif.in_i, vif.load_i, vif.inc_i, vif.q_o);
 
 
 end

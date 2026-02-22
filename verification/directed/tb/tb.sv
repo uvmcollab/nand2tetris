@@ -19,17 +19,27 @@ module tb;
   
   // Instantiation
   
-  RAM512 #(
+  PC #(
     .WIDTH(WIDTH)
     )
   dut (
-    // For RAM64
+    // for PC
       .clk_i(clk_i), 
+      .rst_i(vif.rst_i), 
+      .in_i(vif.in_i), 
+      .load_i(vif.load_i), 
+      .inc_i(vif.inc_i), 
+      .q_o(vif.q_o)
+
+
+    // For RAM64
+    /*  .clk_i(clk_i), 
       .rst_i(vif.rst_i), 
       .in_i(vif.in_i), 
       .load_i(vif.load_i), 
       .address_i(vif.address_i), 
       .out_o(vif.out_o)
+      */
     /* for alu
       .clk_i(clk_i), 
       .rst_i(vif.rst_i), 

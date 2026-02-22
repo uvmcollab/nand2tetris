@@ -77,17 +77,27 @@ endif
 
 # Files
 RTL_FILES = $(RTL_DIR)/Memory/mux2_1.sv \
+			$(RTL_DIR)/Memory/inc16.sv \
+			$(RTL_DIR)/Memory/full_adder.sv \
+			$(RTL_DIR)/Memory/adder16.sv \
 			$(RTL_DIR)/Memory/dff.sv \
-			$(RTL_DIR)/Memory/mux3_8.sv \
-			$(RTL_DIR)/Memory/D_mux8.sv \
 			$(RTL_DIR)/Memory/register_16.sv \
-			$(RTL_DIR)/Memory/RAM.sv \
-			$(RTL_DIR)/Memory/RAM64.sv \
-			$(RTL_DIR)/Memory/RAM512.sv \
-			$(RTL_DIR)/Memory/RAM4K.sv \
-			$(RTL_DIR)/Memory/D_mux4.sv \
-			$(RTL_DIR)/Memory/mux3_4.sv \
-			$(RTL_DIR)/Memory/RAM16K.sv 	
+			$(RTL_DIR)/Memory/PC.sv 
+
+#For RAM
+#$(RTL_DIR)/Memory/mux2_1.sv \
+#$(RTL_DIR)/Memory/dff.sv \
+#$(RTL_DIR)/Memory/mux3_8.sv \
+#$(RTL_DIR)/Memory/D_mux8.sv \
+#$(RTL_DIR)/Memory/register_16.sv \
+#$(RTL_DIR)/Memory/RAM.sv \
+#$(RTL_DIR)/Memory/RAM64.sv \
+#$(RTL_DIR)/Memory/RAM512.sv \
+#$(RTL_DIR)/Memory/RAM4K.sv \
+#$(RTL_DIR)/Memory/D_mux4.sv \
+#$(RTL_DIR)/Memory/mux3_4.sv \
+#$(RTL_DIR)/Memory/RAM16K.sv 	
+# FoR adder			
 #$(RTL_DIR)/boolean_arith/full_adder.sv 
 #$(RTL_DIR)/boolean_arith/adder16.sv 
 #$(RTL_DIR)/boolean_arith/inc16.sv 
