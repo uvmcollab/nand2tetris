@@ -16,7 +16,7 @@
 dump -file novas.fsdb -type FSDB
 dump -add tb.* -depth 0 -fid FSDB0 -aggregates
 run
-
+quit
 # Dumps everything from root including complex data type 
 # dump -file novas.fsdb -type FSDB
 # dump -add / -aggregates

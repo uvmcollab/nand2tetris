@@ -60,6 +60,7 @@ fork
    //  send_data_address();
    // end
 
+
     begin 
     // Monitor
     monitor_output();
@@ -67,7 +68,7 @@ fork
 
 join_any
     // Drain time
-    #(100ns);
+    #(200ns);
     $display("End Of Simulation at %0t.", $realtime);
     $finish;
   end
@@ -243,18 +244,23 @@ join_any
 
 task automatic send_data_in();
     @(vif.cb);
-    vif.cb.in_i <= 16'b0000_0000_0001_0000;   // Ciclo 1: Escribimos
-        @(vif.cb);
+    vif.cb.in_i <= 16'b0000_0000_1111_1111;   // Ciclo 1: Escribimos
+     repeat(7)    @(vif.cb);
+  vif.cb.in_i <= 16'b0000_0000_0000_1111;   // Ciclo 1: Escribimos
+   @(vif.cb);
 endtask: send_data_in  
 
 task automatic send_data_load();
     @(vif.cb);
     vif.cb.load_i <= 1'b0; // Cargamos el valor de in_i en el PC
-     repeat(3) @(vif.cb);
+     repeat(5) @(vif.cb);
         vif.cb.load_i <= 1'b1; // Cargamos el valor de in_i en el PC
           @(vif.cb);
         vif.cb.load_i <= 1'b0; // Cargamos el valor de in_i en el PC
-
+     repeat(5) @(vif.cb);
+        vif.cb.load_i <= 1'b1; // Cargamos el valor de in_i en el PC
+          @(vif.cb);
+        vif.cb.load_i <= 1'b0; // Cargamos el valor de in_i en el PC
 endtask: send_data_load
 
 task automatic send_data_inc();
