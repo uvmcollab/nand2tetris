@@ -253,7 +253,7 @@ endtask: send_data_in
 task automatic send_data_load();
     @(vif.cb);
     vif.cb.load_i <= 1'b0; // Cargamos el valor de in_i en el PC
-     repeat(5) @(vif.cb);
+     repeat(5) @(vif.cb); // repeat + 1 del sincrono
         vif.cb.load_i <= 1'b1; // Cargamos el valor de in_i en el PC
           @(vif.cb);
         vif.cb.load_i <= 1'b0; // Cargamos el valor de in_i en el PC
